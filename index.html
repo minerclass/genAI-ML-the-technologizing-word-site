@@ -1,0 +1,1972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Technologizing of the Word - An Interactive Study in Media Ecology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c14;
+    --bg-2: #10131d;
+    --bg-3: #161a26;
+    --ink: #eae1cb;
+    --ink-warm: #f2ebd6;
+    --ink-dim: #988e78;
+    --ink-faded: #5c5446;
+    --verdigris: #8fa888;
+    --verdigris-bright: #a6c29c;
+    --brass: #c4a469;
+    --brass-bright: #e0ba72;
+    --oxblood: #a13828;
+    --midnight: #3d5b7d;
+    --paper: #181a24;
+    --paper-2: #1d2030;
+    --rule: #2a2c38;
+    --rule-warm: #2e2a22;
+    --ivory-overlay: rgba(234,225,203,0.03);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.55;
+  }
+  body { overflow-x: hidden; }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      radial-gradient(ellipse at 30% 10%, rgba(143,168,136,0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 90%, rgba(196,164,105,0.03) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .serif { font-family: 'Source Serif 4', serif; }
+  .display { font-family: 'Playfair Display', serif; }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  header.masthead {
+    padding: 5rem 2rem 3rem;
+    border-bottom: 1px solid var(--rule);
+    background: linear-gradient(180deg, #0d1020 0%, var(--bg) 100%);
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+  }
+  header.masthead::before {
+    content: '';
+    position: absolute;
+    right: -10%; top: 50%;
+    transform: translateY(-50%);
+    width: 600px; height: 600px;
+    background-image: radial-gradient(circle, rgba(196,164,105,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .masthead-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 1.5rem;
+  }
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 30px; height: 1px;
+    background: var(--brass);
+    vertical-align: middle;
+    margin-right: 0.9rem;
+  }
+  h1.title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: clamp(2.8rem, 6.5vw, 5.8rem);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    max-width: 22ch;
+    color: var(--ink-warm);
+  }
+  h1.title em { font-style: italic; color: var(--brass); font-weight: 400; }
+  .sub-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+    color: var(--ink-dim);
+    margin-top: 1.2rem;
+    max-width: 56ch;
+    line-height: 1.3;
+  }
+  .subtitle {
+    font-family: 'Source Serif 4', serif;
+    font-size: clamp(1rem, 1.3vw, 1.2rem);
+    color: var(--ink-dim);
+    margin-top: 2rem;
+    max-width: 62ch;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+  .byline {
+    margin-top: 2.5rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink-faded);
+    letter-spacing: 0.06em;
+  }
+  .byline span { color: var(--ink-dim); }
+
+  .flourish {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+    opacity: 0.6;
+  }
+  .flourish-line { flex: 1; height: 1px; background: var(--rule); }
+  .flourish-mark {
+    font-family: 'Playfair Display', serif;
+    color: var(--brass);
+    font-size: 1.2rem;
+    font-style: italic;
+  }
+
+  nav.chapters {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(10,12,20,0.95);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--rule);
+    padding: 0.85rem 2rem;
+    display: flex;
+    gap: 0.45rem;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  nav.chapters button {
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--ink-dim);
+    padding: 0.5rem 0.85rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+  }
+  nav.chapters button:hover { color: var(--ink); border-color: var(--verdigris); }
+  nav.chapters button.active {
+    background: var(--brass);
+    color: var(--bg);
+    border-color: var(--brass);
+    font-weight: 500;
+  }
+
+  section.chapter {
+    padding: 6rem 2rem;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    z-index: 2;
+  }
+  section.chapter .inner { max-width: 1200px; margin: 0 auto; }
+
+  .chapter-header {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 2.5rem;
+    align-items: baseline;
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .chapter-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--brass);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .chapter-tag .tag-sub {
+    display: block;
+    color: var(--ink-faded);
+    margin-top: 0.4rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+  }
+  h2.chapter-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: clamp(2.2rem, 4.5vw, 4rem);
+    line-height: 1;
+    letter-spacing: -0.015em;
+    color: var(--ink-warm);
+  }
+  h2.chapter-title em { font-style: italic; color: var(--brass); }
+
+  .lede {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    line-height: 1.65;
+    max-width: 68ch;
+    color: var(--ink);
+    margin-bottom: 3rem;
+  }
+  .lede::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 4.5rem;
+    font-weight: 400;
+    float: left;
+    line-height: 0.88;
+    margin: 0.08em 0.1em 0 0;
+    color: var(--brass);
+  }
+
+  .figures-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  .figure-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 2rem 1.7rem;
+    transition: all 0.25s;
+    position: relative;
+  }
+  .figure-card:hover { border-color: var(--brass); transform: translateY(-3px); }
+  .figure-card .fig-years {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--brass);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+  .figure-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem;
+    font-weight: 500;
+    line-height: 1.1;
+    margin-bottom: 0.3rem;
+  }
+  .figure-card .fig-work {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--ink-dim);
+    margin-bottom: 1rem;
+  }
+  .figure-card p {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1rem;
+    color: var(--ink);
+    line-height: 1.6;
+    margin-bottom: 0.9rem;
+  }
+  .figure-card p strong { color: var(--brass); font-weight: 500; }
+  .figure-card .key-idea {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--ink-faded);
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+  }
+  .figure-card .key-idea .k-label {
+    color: var(--verdigris);
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .portrait-block {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 2.5rem;
+    margin: 3rem 0;
+    align-items: start;
+  }
+  .portrait-frame {
+    aspect-ratio: 3/4;
+    border: 1px solid var(--brass);
+    background: linear-gradient(135deg, #1a1a22 0%, #0f1018 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .portrait-frame svg { width: 100%; height: 100%; display: block; }
+  .portrait-frame .plaque {
+    position: absolute;
+    bottom: 12px; left: 12px; right: 12px;
+    background: rgba(10,12,20,0.9);
+    border: 1px solid var(--brass);
+    padding: 0.4rem 0.6rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--brass);
+    letter-spacing: 0.15em;
+    text-align: center;
+  }
+  .portrait-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 2.5rem;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .portrait-body h3 em { font-style: italic; color: var(--brass); }
+  .portrait-body .role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--verdigris);
+    margin-bottom: 1.5rem;
+  }
+  .portrait-body p {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.08rem;
+    color: var(--ink);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+  }
+  .portrait-body p strong { color: var(--brass); font-weight: 500; }
+
+  .deep-dive {
+    background: linear-gradient(135deg, #1a1d2a 0%, #10131d 100%);
+    border: 1px solid var(--brass);
+    padding: 2.8rem 2.5rem;
+    margin: 3rem 0;
+    position: relative;
+  }
+  .deep-dive::before {
+    content: 'FOUNDATION';
+    position: absolute;
+    top: -10px; left: 2rem;
+    background: var(--bg);
+    color: var(--brass);
+    padding: 0 0.8rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.28em;
+  }
+  .deep-dive h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    line-height: 1.05;
+  }
+  .deep-dive h3 em { color: var(--brass); font-style: italic; }
+  .deep-dive-body {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--ink);
+    max-width: 72ch;
+  }
+
+  .interactive {
+    background: #070810;
+    border: 1px solid var(--rule);
+    margin: 2.5rem 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .interactive-header {
+    padding: 1.1rem 1.5rem;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    background: rgba(24,26,36,0.6);
+  }
+  .interactive-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--verdigris);
+  }
+  .interactive-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    line-height: 1.15;
+  }
+  .interactive-body { padding: 1.8rem; }
+
+  button.action {
+    background: transparent;
+    color: var(--brass);
+    border: 1px solid var(--brass);
+    padding: 0.55rem 1.1rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  button.action:hover {
+    background: var(--brass);
+    color: var(--bg);
+  }
+
+  .stages-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.4rem;
+    margin-bottom: 2rem;
+  }
+  .stage-btn {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 1.2rem 0.9rem;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: left;
+    position: relative;
+  }
+  .stage-btn.extended { border-top: 2px solid var(--brass); }
+  .stage-btn:hover { border-color: var(--verdigris); }
+  .stage-btn.active {
+    background: var(--bg-3);
+    border-color: var(--brass);
+    box-shadow: 0 0 0 1px var(--brass);
+  }
+  .stage-btn .num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--brass);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.3rem;
+  }
+  .stage-btn .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    line-height: 1.1;
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+  }
+  .stage-btn .years {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--ink-faded);
+    letter-spacing: 0.1em;
+  }
+  .stage-btn .marker {
+    position: absolute;
+    top: 5px; right: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--brass);
+    letter-spacing: 0.1em;
+  }
+  .stage-detail {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 2.2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    min-height: 380px;
+  }
+  .stage-viz {
+    background: #050610;
+    border: 1px solid var(--rule);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1.1;
+  }
+  .stage-viz svg { width: 100%; height: 100%; max-height: 340px; }
+  .stage-info h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stage-info .era {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--brass);
+    letter-spacing: 0.15em;
+    margin-bottom: 1.5rem;
+  }
+  .stage-info .def {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .stage-table { display: grid; gap: 0.8rem; }
+  .stage-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 1rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px dotted var(--rule);
+  }
+  .stage-row:last-child { border-bottom: none; }
+  .stage-row .row-key {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--verdigris);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding-top: 0.15rem;
+  }
+  .stage-row .row-val {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .stage-row .row-val.loss { color: var(--oxblood); }
+  .stage-row .row-val.gain { color: var(--verdigris-bright); }
+
+  .tetrad-frame {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 2rem;
+    align-items: start;
+  }
+  .tetrad-viz-wrap {
+    background: #050610;
+    border: 1px solid var(--rule);
+    padding: 1rem;
+    aspect-ratio: 1;
+  }
+  .tetrad-viz-wrap svg { width: 100%; height: 100%; }
+  .medium-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .medium-picker .pick-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-bottom: 0.5rem;
+  }
+  .medium-btn {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+    font-family: 'Source Serif 4', serif;
+    font-size: 1rem;
+    color: var(--ink);
+  }
+  .medium-btn:hover { border-color: var(--verdigris); }
+  .medium-btn.active {
+    background: var(--bg-3);
+    border-color: var(--brass);
+    color: var(--brass);
+  }
+  .medium-btn .sm {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--ink-faded);
+    letter-spacing: 0.08em;
+    margin-top: 0.2rem;
+  }
+  .tetrad-panel {
+    margin-top: 1.5rem;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 1.5rem;
+  }
+  .tetrad-panel h5 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--brass);
+    margin-bottom: 0.5rem;
+  }
+  .tetrad-panel .t-medium {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--verdigris);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .tetrad-panel .t-quote {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.6;
+    padding-left: 1rem;
+    border-left: 2px solid var(--brass);
+  }
+
+  .assumptions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+    margin: 2rem 0;
+  }
+  .assumption {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 1.8rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .assumption.broken { border-color: var(--oxblood); }
+  .assumption .a-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--brass);
+    letter-spacing: 0.2em;
+    margin-bottom: 0.6rem;
+  }
+  .assumption h5 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .assumption .a-before {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.98rem;
+    color: var(--ink-dim);
+    line-height: 1.55;
+    margin-bottom: 1rem;
+  }
+  .assumption .a-rupture {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+    line-height: 1.55;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--rule);
+    display: none;
+    position: relative;
+  }
+  .assumption.broken .a-rupture { display: block; }
+  .assumption.broken .a-rupture::before {
+    content: 'BREAKS:';
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--oxblood);
+    letter-spacing: 0.2em;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .assumption .toggle {
+    margin-top: 1rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--brass);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .assumptions-master-toggle {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+
+  .char-frame {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 2rem;
+    align-items: stretch;
+  }
+  .char-viz-wrap {
+    background: #050610;
+    border: 1px solid var(--rule);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .char-viz-wrap svg { width: 100%; max-width: 420px; height: auto; }
+  .char-panel {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 440px;
+  }
+  .char-selector {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+  }
+  .char-selector button {
+    flex: 1;
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--ink-dim);
+    padding: 0.6rem 0.5rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .char-selector button:hover { color: var(--ink); }
+  .char-selector button.active {
+    background: var(--brass);
+    color: var(--bg);
+    border-color: var(--brass);
+  }
+  .char-content h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 1.05;
+    margin-bottom: 0.3rem;
+  }
+  .char-content h4 em { color: var(--brass); font-style: italic; }
+  .char-content .char-domain {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--verdigris);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+  .char-content .char-def {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--ink);
+    margin-bottom: 1.3rem;
+  }
+  .char-block {
+    margin-bottom: 1rem;
+    padding: 1rem 1.2rem;
+    background: rgba(143,168,136,0.04);
+    border-left: 2px solid var(--verdigris);
+  }
+  .char-block.edu { background: rgba(196,164,105,0.05); border-left-color: var(--brass); }
+  .char-block .bl-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--verdigris);
+    margin-bottom: 0.4rem;
+  }
+  .char-block.edu .bl-label { color: var(--brass); }
+  .char-block p {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+
+  .retention-frame {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.6rem;
+    margin: 2rem 0;
+  }
+  .retention-col {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 1.4rem 1rem;
+    position: relative;
+    transition: all 0.25s;
+  }
+  .retention-col.primary { border-top: 2px solid var(--verdigris); }
+  .retention-col.secondary { border-top: 2px solid var(--midnight); }
+  .retention-col.tertiary { border-top: 2px solid var(--brass); }
+  .retention-col.synthetic { border-top: 2px solid var(--oxblood); background: rgba(161,56,40,0.06); }
+  .retention-col:hover { transform: translateY(-3px); }
+  .retention-col .r-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    margin-bottom: 0.4rem;
+  }
+  .primary .r-num { color: var(--verdigris); }
+  .secondary .r-num { color: var(--midnight); }
+  .tertiary .r-num { color: var(--brass); }
+  .synthetic .r-num { color: var(--oxblood); }
+  .retention-col h5 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 0.7rem;
+    line-height: 1.15;
+  }
+  .retention-col .r-eg {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--ink-faded);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+  .retention-col p {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.92rem;
+    color: var(--ink);
+    line-height: 1.55;
+  }
+
+  blockquote.pullquote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.9rem;
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--brass);
+    border-left: 3px solid var(--brass);
+    padding: 1.3rem 0 1.3rem 1.8rem;
+    margin: 3rem 0;
+    max-width: 64ch;
+    position: relative;
+  }
+  blockquote.pullquote::before {
+    content: '"';
+    position: absolute;
+    left: -0.3rem;
+    top: -1.2rem;
+    font-size: 5rem;
+    color: var(--brass);
+    opacity: 0.25;
+    font-style: normal;
+    font-family: 'Playfair Display', serif;
+  }
+  blockquote.pullquote cite {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--ink-faded);
+    font-style: normal;
+    font-family: 'IBM Plex Mono', monospace;
+    margin-top: 1rem;
+    letter-spacing: 0.08em;
+  }
+
+  .note {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.98rem;
+    font-style: italic;
+    color: var(--ink-dim);
+    border-left: 2px solid var(--verdigris);
+    padding: 0.7rem 1.1rem;
+    margin: 1.5rem 0;
+    line-height: 1.6;
+  }
+  .note strong { color: var(--ink); font-style: normal; }
+
+  .prior-table {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    overflow: hidden;
+    margin: 2rem 0;
+  }
+  .prior-row {
+    display: grid;
+    grid-template-columns: 160px 1fr 1fr;
+    gap: 1.5rem;
+    padding: 1.3rem 1.5rem;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+  .prior-row:last-child { border-bottom: none; }
+  .prior-row.head {
+    background: var(--bg-3);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--verdigris);
+  }
+  .prior-row .p-year {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--brass);
+    font-size: 0.9rem;
+  }
+  .prior-row .p-year strong {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--brass);
+    margin-bottom: 0.2rem;
+  }
+  .prior-row .p-year em {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    color: var(--ink);
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+  .prior-row .p-proposal {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.98rem;
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .prior-row .p-limit {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.93rem;
+    color: var(--ink-dim);
+    line-height: 1.55;
+    font-style: italic;
+  }
+
+  footer.coda {
+    padding: 5rem 2rem 3rem;
+    text-align: center;
+    background: var(--bg-2);
+    border-top: 1px solid var(--rule);
+    position: relative;
+    z-index: 2;
+  }
+  footer.coda .mark {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    color: var(--brass);
+    margin-bottom: 1rem;
+    letter-spacing: 0.2em;
+  }
+  footer.coda p {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1rem;
+    color: var(--ink-dim);
+    font-style: italic;
+    max-width: 68ch;
+    margin: 0 auto;
+    line-height: 1.65;
+  }
+  footer.coda .attrib {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--brass);
+    font-style: normal;
+    margin-top: 2rem;
+    letter-spacing: 0.08em;
+  }
+
+  @media (max-width: 900px) {
+    .figures-grid { grid-template-columns: 1fr; }
+    .tetrad-frame { grid-template-columns: 1fr; }
+    .char-frame { grid-template-columns: 1fr; }
+    .portrait-block { grid-template-columns: 1fr; gap: 1.5rem; }
+    .chapter-header { grid-template-columns: 1fr; gap: 0.5rem; }
+    .stages-strip { grid-template-columns: 1fr 1fr; }
+    .stage-detail { grid-template-columns: 1fr; }
+    .assumptions-grid { grid-template-columns: 1fr; }
+    .retention-frame { grid-template-columns: 1fr 1fr; }
+    .prior-row { grid-template-columns: 1fr; gap: 0.6rem; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  section.chapter > .inner > * {
+    animation: fadeUp 0.6s ease both;
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="eyebrow">An Interactive Companion · Qualifying Paper Theoretical Framework</div>
+    <h1 class="title">The Technologizing of the <em>Word</em></h1>
+    <div class="sub-title">On media ecology, the noetic world, and the consciousness that communication technology has always been quietly rearranging.</div>
+    <p class="subtitle">A study of the theoretical architecture behind <em>Beyond Secondary Orality: Tertiary Algorithmicity and the Case for Pedagogical Friction</em>. The tradition begins with Innis and McLuhan in Toronto, travels through Ong at Saint Louis, becomes a program under Postman in New York, and arrives, eventually, at the question of what happens to the human relationship with the symbolic environment when the environment itself is algorithmically generated.</p>
+    <div class="byline"><span>Seven chapters. Each interactive.</span> &nbsp;·&nbsp; Designed for doctoral committee, academic audiences, and thoughtful practitioners.</div>
+  </div>
+</header>
+
+<nav class="chapters" id="chapNav">
+  <button data-ch="tradition" class="active">§ I The Tradition</button>
+  <button data-ch="mcluhan">§ II McLuhan</button>
+  <button data-ch="ong">§ III Ong</button>
+  <button data-ch="company">§ IV The Company</button>
+  <button data-ch="ruptures">§ V Three Ruptures</button>
+  <button data-ch="orality">§ VI The Tertiary Orality Problem</button>
+  <button data-ch="extensions">§ VII The Two Extensions</button>
+  <button data-ch="closing">§ VIII Closing</button>
+</nav>
+
+<section class="chapter" id="tradition">
+  <div class="inner">
+    <div class="chapter-header">
+      <div class="chapter-tag">§ I<span class="tag-sub">THE TRADITION</span></div>
+      <h2 class="chapter-title">What media ecology <em>sees</em>.</h2>
+    </div>
+
+    <p class="lede">Media ecology is the study of communication technologies as environments rather than as tools. It holds, with Neil Postman who coined the phrase as a formal program in 1968, that the structure and flow of information in a society shape what that society can perceive, value, and think. The tradition does not ask what people say on television, over the radio, in writing, or now through generative AI systems. It asks what happens to a mind, and to a culture, when one of these media becomes the dominant condition under which saying occurs at all. The claim is not that media determine thought. It is that media tilt the ground on which thought takes place, and that the tilt is worth seeing.</p>
+
+    <div class="deep-dive">
+      <h3>The <em>core</em> premise</h3>
+      <p class="deep-dive-body">Communication technologies are not neutral carriers of pre-formed ideas. They are environmental forces that restructure memory, attention, authorship, and the social relations through which knowledge is made. What a medium makes easy, a culture tends to do; what a medium makes hard, a culture tends to abandon; what is abandoned long enough becomes unthinkable. This is the central claim the qualifying paper inherits from the tradition, and the basis on which the extensions the paper proposes become not only possible but necessary.</p>
+    </div>
+
+    <blockquote class="pullquote">
+      We shape our tools and thereafter our tools shape us.
+      <cite>- Attributed to Marshall McLuhan, formulated by Father John Culkin in 1967</cite>
+    </blockquote>
+
+    <p class="lede" style="font-size:1.1rem;margin-top:2rem">The lineage that most directly informs the qualifying paper descends from what is sometimes called the <em>Toronto School</em>: Harold Innis, Marshall McLuhan, and Walter Ong, with Neil Postman formalizing the project as a named field at New York University. From this spine extend the analyses of Bernard Stiegler on externalized memory, Sherry Turkle on digital intimacy, Nicholas Carr and Maryanne Wolf on reading under conditions of distraction, and Daniel Krutka, Marie Heath, and Lance Mason on what a technoskeptical pedagogy would require. The chapters that follow move through the figures most consequential to the argument the paper makes, beginning with the figure from whom the central intuition of the tradition derives.</p>
+  </div>
+</section>
+
+<section class="chapter" id="mcluhan">
+  <div class="inner">
+    <div class="chapter-header">
+      <div class="chapter-tag">§ II<span class="tag-sub">1911 - 1980 · TORONTO</span></div>
+      <h2 class="chapter-title">McLuhan: the medium <em>as</em> message.</h2>
+    </div>
+
+    <div class="portrait-block">
+      <div class="portrait-frame">
+        <svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="mcluhanBg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#1a1d2a"/>
+              <stop offset="1" stop-color="#0f1018"/>
+            </linearGradient>
+            <pattern id="mcDots" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+              <circle cx="3" cy="3" r="0.5" fill="#c4a469" opacity="0.15"/>
+            </pattern>
+          </defs>
+          <rect width="200" height="260" fill="url(#mcluhanBg)"/>
+          <rect width="200" height="260" fill="url(#mcDots)"/>
+          <ellipse cx="100" cy="85" rx="28" ry="34" fill="#1a1d2a" stroke="#c4a469" stroke-width="1"/>
+          <circle cx="90" cy="83" r="7" fill="none" stroke="#c4a469" stroke-width="1.2"/>
+          <circle cx="110" cy="83" r="7" fill="none" stroke="#c4a469" stroke-width="1.2"/>
+          <line x1="97" y1="83" x2="103" y2="83" stroke="#c4a469" stroke-width="1"/>
+          <path d="M 60 160 Q 70 120 100 120 Q 130 120 140 160 L 140 240 L 60 240 Z" fill="#1a1d2a" stroke="#c4a469" stroke-width="1"/>
+          <polygon points="100,130 95,150 100,180 105,150" fill="#c4a469" opacity="0.5"/>
+          <path d="M 5 5 L 20 5 M 5 5 L 5 20" stroke="#c4a469" stroke-width="1" fill="none"/>
+          <path d="M 195 5 L 180 5 M 195 5 L 195 20" stroke="#c4a469" stroke-width="1" fill="none"/>
+          <path d="M 5 255 L 20 255 M 5 255 L 5 240" stroke="#c4a469" stroke-width="1" fill="none"/>
+          <path d="M 195 255 L 180 255 M 195 255 L 195 240" stroke="#c4a469" stroke-width="1" fill="none"/>
+        </svg>
+        <div class="plaque">HERBERT MARSHALL MCLUHAN</div>
+      </div>
+      <div class="portrait-body">
+        <div class="role">Founder · Media Ecology</div>
+        <h3>Marshall <em>McLuhan</em></h3>
+        <p>A Canadian literary scholar who trained on sixteenth-century rhetoric and ended up as the most-quoted and least-read media theorist of the twentieth century. McLuhan argued that the <strong>form</strong> of a medium reshapes perception more than whatever content the medium happens to carry. A culture that reads books develops one kind of consciousness. A culture that watches television develops another. The content may be identical. The cognitive effects are not.</p>
+        <p>His 1964 <em>Understanding Media: The Extensions of Man</em> is the book the paper cites most often in establishing the environmental stakes of generative AI. His posthumous <em>Laws of Media</em> (1988), completed with his son Eric, gave the tradition its most useful analytical instrument: the <strong>tetrad</strong>. Four questions asked of any technology that would show, with surprising economy, what the technology was about to do to the world it entered.</p>
+      </div>
+    </div>
+
+    <blockquote class="pullquote">
+      The medium is the message. This is merely to say that the personal and social consequences of any medium result from the new scale that is introduced into our affairs by any extension of ourselves, or by any new technology.
+      <cite>- McLuhan, Understanding Media, 1964</cite>
+    </blockquote>
+
+    <div class="interactive">
+      <div class="interactive-header">
+        <div>
+          <div class="interactive-label">Interactive · McLuhan's Tetrad</div>
+          <div class="interactive-title">Four questions asked of any medium</div>
+        </div>
+        <div class="mono" style="font-size:0.7rem;color:var(--ink-faded)">Select a medium. Hover each quadrant.</div>
+      </div>
+      <div class="interactive-body">
+        <div class="tetrad-frame">
+          <div>
+            <div class="tetrad-viz-wrap">
+              <svg id="tetradSVG" viewBox="0 0 420 420" preserveAspectRatio="xMidYMid meet"></svg>
+            </div>
+            <div class="tetrad-panel" id="tetradPanel">
+              <div class="t-medium">SELECT A MEDIUM AT RIGHT</div>
+              <h5>The Tetrad</h5>
+              <p class="t-quote">McLuhan proposed that every technology, when examined carefully, could be understood by asking four questions about its effects. The answers are rarely obvious, and they are never purely positive or purely negative. They reveal the medium's full character: what it amplifies, what it drives out, what it brings back from a displaced past, and what it becomes when pushed to its own limit.</p>
+            </div>
+          </div>
+          <div class="medium-picker">
+            <div class="pick-label">CHOOSE A MEDIUM</div>
+            <button class="medium-btn" data-m="writing">The Alphabet<span class="sm">4th millennium BCE forward</span></button>
+            <button class="medium-btn" data-m="print">The Printing Press<span class="sm">Gutenberg, c. 1450</span></button>
+            <button class="medium-btn" data-m="broadcast">Radio &amp; Television<span class="sm">20th century broadcast</span></button>
+            <button class="medium-btn" data-m="social">Social Media<span class="sm">Algorithmic platforms, 2006 forward</span></button>
+            <button class="medium-btn" data-m="genai">Generative AI<span class="sm">Public LLMs, late 2022 forward</span></button>
+          </div>
+        </div>
+        <div class="note"><strong>How to read the tetrad.</strong> The four effects operate simultaneously, not in sequence. A medium enhances, obsolesces, retrieves, and reverses at the same time. The reversal is particularly worth attention: McLuhan noticed that every medium, when pushed past a certain intensity, tips into something close to its opposite. The tetrad for generative AI is proposed here in the spirit McLuhan intended, which is to say, as a diagnostic invitation rather than a settled verdict.</div>
+      </div>
+    </div>
+
+    <div class="deep-dive">
+      <h3>Hot media, <em>cool</em> media</h3>
+      <p class="deep-dive-body">McLuhan also distinguished <strong>hot</strong> media, which deliver high-definition information that requires little participation from the receiver, from <strong>cool</strong> media, which offer lower definition and demand that the receiver fill in the gaps. Radio and film, in his account, run hot. Television, telephone, and speech run cool. Generative AI, on this taxonomy, is a peculiar inversion: its <em>output</em> is extremely hot (fluent, high-definition, seemingly complete) while the <em>production process</em> invites almost no participation from the user beyond the prompt. The medium delivers a saturated finished product in exchange for minimal engagement. This is, in McLuhan's vocabulary, an unusually one-sided energetic arrangement, and the pedagogical consequences follow directly from the asymmetry.</p>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="ong">
+  <div class="inner">
+    <div class="chapter-header">
+      <div class="chapter-tag">§ III<span class="tag-sub">1912 - 2003 · SAINT LOUIS</span></div>
+      <h2 class="chapter-title">Ong: the technologizing of the <em>word</em>.</h2>
+    </div>
+
+    <div class="portrait-block">
+      <div class="portrait-frame">
+        <svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="ongBg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#1a1d2a"/>
+              <stop offset="1" stop-color="#0f1018"/>
+            </linearGradient>
+            <pattern id="ongDots" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+              <circle cx="3" cy="3" r="0.5" fill="#8fa888" opacity="0.15"/>
+            </pattern>
+          </defs>
+          <rect width="200" height="260" fill="url(#ongBg)"/>
+          <rect width="200" height="260" fill="url(#ongDots)"/>
+          <ellipse cx="100" cy="85" rx="26" ry="33" fill="#1a1d2a" stroke="#8fa888" stroke-width="1"/>
+          <path d="M 75 70 Q 78 55 100 55 Q 122 55 125 70 Q 125 75 120 80 Q 110 72 100 72 Q 90 72 80 80 Q 75 75 75 70 Z" fill="#8fa888" opacity="0.3"/>
+          <rect x="88" y="118" width="24" height="8" fill="#eae1cb" opacity="0.4"/>
+          <rect x="96" y="120" width="8" height="4" fill="#0f1018"/>
+          <path d="M 65 160 Q 72 125 100 125 Q 128 125 135 160 L 135 240 L 65 240 Z" fill="#1a1d2a" stroke="#8fa888" stroke-width="1"/>
+          <path d="M 5 5 L 20 5 M 5 5 L 5 20" stroke="#8fa888" stroke-width="1" fill="none"/>
+          <path d="M 195 5 L 180 5 M 195 5 L 195 20" stroke="#8fa888" stroke-width="1" fill="none"/>
+          <path d="M 5 255 L 20 255 M 5 255 L 5 240" stroke="#8fa888" stroke-width="1" fill="none"/>
+          <path d="M 195 255 L 180 255 M 195 255 L 195 240" stroke="#8fa888" stroke-width="1" fill="none"/>
+        </svg>
+        <div class="plaque" style="color:var(--verdigris);border-color:var(--verdigris)">WALTER J. ONG, S.J.</div>
+      </div>
+      <div class="portrait-body">
+        <div class="role">Jesuit, Philologist, Theorist of the Word</div>
+        <h3>Walter <em>Ong</em></h3>
+        <p>A Jesuit priest, student of Marshall McLuhan at Saint Louis University, and the theorist whose developmental account of communication technology gives the qualifying paper its primary analytical spine. Ong's 1982 <em>Orality and Literacy: The Technologizing of the Word</em> is the book from which nearly every major claim of the paper's theoretical framework descends.</p>
+        <p>Where McLuhan thought in aphorisms and provocations, Ong wrote in careful, phenomenologically informed prose. He distinguished three stages in the relationship between consciousness and the symbolic environment: <strong>primary orality</strong>, the condition of cultures without writing; <strong>literacy</strong>, the internalization of writing into cognitive structure; and <strong>secondary orality</strong>, the partial return of oral characteristics through electronic broadcast media. Each stage, for Ong, was a complete cognitive ecology with its own epistemological logic. Literacy was not better than orality. It was different, and its difference was consequential.</p>
+      </div>
+    </div>
+
+    <blockquote class="pullquote">
+      By separating the knower from the known, writing makes possible increasingly articulate introspectivity, opening the psyche as never before to the exterior objective world quite distinct from itself.
+      <cite>- Ong, Orality and Literacy, 1982, p. 105</cite>
+    </blockquote>
+
+    <div class="interactive">
+      <div class="interactive-header">
+        <div>
+          <div class="interactive-label">Interactive · The Noetic World</div>
+          <div class="interactive-title">Ong's three stages, plus the two extensions the paper proposes</div>
+        </div>
+        <div class="mono" style="font-size:0.7rem;color:var(--ink-faded)">Click each stage.</div>
+      </div>
+      <div class="interactive-body">
+        <div class="stages-strip" id="stagesStrip"></div>
+        <div class="stage-detail" id="stageDetail">
+          <div class="stage-viz"><svg id="stageVizSVG" viewBox="0 0 320 320"></svg></div>
+          <div class="stage-info" id="stageInfo"></div>
+        </div>
+        <div class="note" style="margin-top:1.5rem"><strong>Stages 1-3 are Ong's.</strong> Stages 4 and 5, marked with the brass accent, are the extensions the qualifying paper contributes. Ong's stages are not superseded by the extensions; they coexist. A contemporary student operates across multiple stages in a single afternoon, and the analytical value of the sequence lies in what it makes visible about the <em>dominant</em> tendency of a given moment.</div>
+      </div>
+    </div>
+
+    <div class="deep-dive">
+      <h3>The <em>noetic</em> world</h3>
+      <p class="deep-dive-body">Ong's most consequential term, and the one from which the qualifying paper derives its construct of <em>noetic displacement</em>, is the <strong>noetic world</strong>. The word comes from the Greek <em>nous</em>, meaning mind or intellect. For Ong, the noetic world is not just what a culture thinks but the structure of thinking itself: the habits of memory, the forms of attention, the patterns of reasoning, the shape that knowing takes under the conditions of a particular dominant medium. When the medium changes, the noetic world rearranges. When the rearrangement is large enough, a new stage has occurred, and the analytical task is to describe what that stage has gained and what it has lost. This is what the paper does for the two new stages it proposes.</p>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="company">
+  <div class="inner">
+    <div class="chapter-header">
+      <div class="chapter-tag">§ IV<span class="tag-sub">SUPPORTING FIGURES</span></div>
+      <h2 class="chapter-title">The company <em>kept</em>.</h2>
+    </div>
+
+    <p class="lede">Ong and McLuhan are the spine of the paper's theoretical framework, but they are not sufficient on their own. The argument draws from a small constellation of additional thinkers whose contributions, taken together, supply the vocabulary the paper uses to name what generative AI is doing to the conditions of learning. Each of these figures works in a slightly different register. Postman is a cultural critic and institution-builder. Stiegler is a continental philosopher in the phenomenological tradition. Turkle is a social psychologist of technology. Carr and Wolf are researchers of reading and attention. Krutka, Heath, and Mason are education scholars who translated the tradition into a curricular framework. Read together, they form a set of analytical tools without which the paper's argument could not be made with the precision it attempts.</p>
+
+    <div class="figures-grid">
+      <div class="figure-card">
+        <div class="fig-years">1931 - 2003 · NEW YORK</div>
+        <h4>Neil Postman</h4>
+        <div class="fig-work">Amusing Ourselves to Death · Technopoly</div>
+        <p>The theorist who built media ecology into a formal academic program at NYU. Postman's contribution is the claim that <strong>each medium brings with it an epistemology</strong>: a way of knowing, a set of assumptions about what counts as truth, argument, and evidence.</p>
+        <p>The television age, in his analysis, was not simply an age in which people watched television; it was an age in which the very forms of coherent public reasoning began to erode because the medium favored spectacle over sustained argument. The qualifying paper's concern that generative AI normalizes the appearance of reasoning without its substance is Postman's argument, updated.</p>
+        <div class="key-idea">
+          <span class="k-label">FOR THE PAPER</span>
+          Each medium makes some forms of knowing easier and some harder. Policy that addresses content without addressing form misses what is actually happening.
+        </div>
+      </div>
+
+      <div class="figure-card">
+        <div class="fig-years">1952 - 2020 · PARIS</div>
+        <h4>Bernard Stiegler</h4>
+        <div class="fig-work">Technics and Time · Automatic Society</div>
+        <p>A French philosopher whose concept of <strong>tertiary retention</strong> gives the paper its most precise vocabulary for what generative AI is doing to memory and cognition. Stiegler extended Husserl's phenomenology of time consciousness to argue that technical objects, including books, photographs, recordings, databases, function as externalized forms of memory that become constitutive of the cognitive processes they support.</p>
+        <p>Every prior form of tertiary retention preserved traces of actual experience. A neural network produces outputs that take the form of tertiary retentions without originating in any experience whatsoever. This is the categorical break the paper isolates, and Stiegler's framework is what makes the break legible.</p>
+        <div class="key-idea">
+          <span class="k-label">FOR THE PAPER</span>
+          Generative AI produces "memories" of experiences that never occurred. The phenomenological strangeness of this is what tertiary algorithmicity names.
+        </div>
+      </div>
+
+      <div class="figure-card">
+        <div class="fig-years">1948 - · CAMBRIDGE, MA</div>
+        <h4>Sherry Turkle</h4>
+        <div class="fig-work">Life on the Screen · Alone Together</div>
+        <p>An MIT social psychologist whose longitudinal fieldwork traced how digital environments reshape the texture of human relation. Turkle's <em>Alone Together</em> (2011) documented a condition in which people increasingly preferred mediated communication, which they could control, over unmediated human exchange, which they could not.</p>
+        <p>Her diagnosis anticipates the pedagogical problem the paper names as the decay of <strong>rhetorical friction</strong>. A student whose primary interlocutor is an AI that never misunderstands, never pushes back unexpectedly, and never has a bad day is a student whose dialogic capacities are quietly undeveloped.</p>
+        <div class="key-idea">
+          <span class="k-label">FOR THE PAPER</span>
+          We expect more from technology and less from each other. Education depends on the second half of that exchange.
+        </div>
+      </div>
+
+      <div class="figure-card">
+        <div class="fig-years">1959 · WRITERS IN ATTENTION</div>
+        <h4>Carr · Wolf</h4>
+        <div class="fig-work">The Shallows · Reader, Come Home</div>
+        <p>Nicholas Carr and Maryanne Wolf, from journalism and cognitive neuroscience respectively, documented what the shift to screen reading was doing to the attentional substrate on which deep reading had historically rested. Carr's <em>The Shallows</em> (2010) and Wolf's <em>Reader, Come Home</em> (2018) both argued that the capacity for sustained, patient engagement with complex text was being eroded by environments optimized for quick, fragmentary attention.</p>
+        <p>Neither was Luddite. Both were making an empirical claim about <strong>plasticity</strong>: that the reading brain, like all human cognitive architecture, is shaped by what it does most often, and that what a culture does most often is what the culture becomes able to do.</p>
+        <div class="key-idea">
+          <span class="k-label">FOR THE PAPER</span>
+          Attention is not a personal trait. It is a cognitive infrastructure that media environments either build or erode.
+        </div>
+      </div>
+
+      <div class="figure-card">
+        <div class="fig-years">2020 - 2024 · EDU SCHOLARS</div>
+        <h4>Krutka · Heath · Mason</h4>
+        <div class="fig-work">Civics of Technology · Technoskepticism Iceberg</div>
+        <p>Education scholars who formalized a practical framework for <strong>educational technoskepticism</strong>. Their <em>Technoskepticism Iceberg</em> distinguishes the visible technical features of a technology (above the waterline) from the submerged psychosocial and political effects that the visible features make it easy to miss.</p>
+        <p>The framework gives teachers a concrete set of questions to interrogate any technology: what does it amplify, whom does it benefit, what does it quietly require, what does it prevent. This is the pedagogical translation of the media-ecological tradition the paper inherits, and it is what distinguishes the paper's stance from the naive enthusiasm and the reflexive rejection that dominate most school-level AI discourse.</p>
+        <div class="key-idea">
+          <span class="k-label">FOR THE PAPER</span>
+          Technoskepticism is not rejection. It is the discipline of asking, every time, what lies beneath the interface.
+        </div>
+      </div>
+
+      <div class="figure-card">
+        <div class="fig-years">1929 - 2007 · MONTREAL</div>
+        <h4>Jean Baudrillard</h4>
+        <div class="fig-work">Simulacra and Simulation</div>
+        <p>A figure the paper uses with caution. Baudrillard proposed four progressive phases in the relationship between image and reality, culminating in the <strong>pure simulacrum</strong>: an image that bears no relation to any underlying reality at all. The paper finds this typology useful as a diagnostic of what generative AI produces, which is symbolic forms that function as if they referred to grounded claims while originating in statistical pattern completion.</p>
+        <p>Where the paper departs from Baudrillard is the prognosis. Baudrillard concluded that meaning was lost and resistance was reabsorbed. The paper declines that conclusion because <strong>learning science</strong> offers empirical evidence that cognitive interventions still produce measurable differences in understanding. The diagnosis is Baudrillard's. The response is not.</p>
+        <div class="key-idea">
+          <span class="k-label">FOR THE PAPER</span>
+          The structural condition Baudrillard describes is real. Its finality is not. Intervention remains possible, and necessary.
+        </div>
+      </div>
+    </div>
+
+    <div class="interactive">
+      <div class="interactive-header">
+        <div>
+          <div class="interactive-label">Conceptual Diagram · Stiegler</div>
+          <div class="interactive-title">Three retentions, and the fourth that complicates them</div>
+        </div>
+      </div>
+      <div class="interactive-body">
+        <div class="retention-frame">
+          <div class="retention-col primary">
+            <div class="r-num">I · IMMEDIATE</div>
+            <h5>Primary Retention</h5>
+            <div class="r-eg">The just-now of experience</div>
+            <p>The lingering present moment in consciousness. The note you just heard in a melody, still audible in memory as the next note arrives. This is the foundational layer of experience.</p>
+          </div>
+          <div class="retention-col secondary">
+            <div class="r-num">II · RECOLLECTIVE</div>
+            <h5>Secondary Retention</h5>
+            <div class="r-eg">Memory proper</div>
+            <p>The recollection of experiences no longer present. Your memory of yesterday, of childhood, of a conversation last week. Secondary retention preserves what primary retention has let slip.</p>
+          </div>
+          <div class="retention-col tertiary">
+            <div class="r-num">III · EXTERNALIZED</div>
+            <h5>Tertiary Retention</h5>
+            <div class="r-eg">Books · photos · recordings</div>
+            <p>Technical supports that preserve traces of experience outside any single mind. A book retains what an author knew. A photograph retains what a camera witnessed. Stiegler argues that these are constitutive of, not supplementary to, human cognition.</p>
+          </div>
+          <div class="retention-col synthetic">
+            <div class="r-num">IV · THE COMPLICATION</div>
+            <h5>Synthetic "Retention"</h5>
+            <div class="r-eg">Neural network output</div>
+            <p>Generative AI produces outputs that take the <em>form</em> of tertiary retentions while retaining nothing that was ever present to any consciousness. The appearance of memory without any memory behind it. This is the structural strangeness the paper isolates.</p>
+          </div>
+        </div>
+        <div class="note"><strong>What Stiegler gives the paper.</strong> The tradition had a name for externalized memory. It did not yet have a name for the specific strangeness of externalized memory that was never anyone's memory. The paper's term <em>tertiary algorithmicity</em> is, in part, an answer to this lack.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="ruptures">
+  <div class="inner">
+    <div class="chapter-header">
+      <div class="chapter-tag">§ V<span class="tag-sub">THE ANALYTICAL HINGE</span></div>
+      <h2 class="chapter-title">Three assumptions that <em>no longer</em> hold.</h2>
+    </div>
+
+    <p class="lede">The case for extending Ong's framework does not rest on the observation that new technologies have arrived. New technologies arrive continuously, and most do not require new stage distinctions. The case rests on a narrower and more specific claim: that three assumptions embedded in Ong's account of secondary orality, which held across all prior stages, no longer describe the current media environment. If the assumptions hold, then contemporary digital communication is an intensification of secondary orality and no new vocabulary is needed. If they break, then new conceptual categories are required. The paper argues, in its analytical hinge, that they break. Click each assumption below to see how.</p>
+
+    <div class="assumptions-master-toggle">
+      <button class="action" id="breakAll">Show how all three break ↓</button>
+    </div>
+
+    <div class="assumptions-grid" id="assumptionsGrid">
+      <div class="assumption" data-idx="0">
+        <div class="a-num">ASSUMPTION I</div>
+        <h5>Humans create symbolic content</h5>
+        <div class="a-before">Across every stage Ong described, the source of symbolic expression was human consciousness. Oral performers composed and delivered. Authors wrote. Broadcast producers scripted and filmed. The media changed; the human origin of content did not.</div>
+        <div class="a-rupture">Neural networks produce essays, analyses, images, and arguments without human authorship in any traditional sense. The outputs are statistical predictions of what plausible text looks like, generated by systems that have never experienced what they write about. A student can submit work that reads as a demonstration of understanding without any understanding having occurred.</div>
+        <div class="toggle">Click to reveal →</div>
+      </div>
+      <div class="assumption" data-idx="1">
+        <div class="a-num">ASSUMPTION II</div>
+        <h5>Distribution follows transparent logics</h5>
+        <div class="a-before">In primary orality, distribution was face-to-face. In literate cultures, publication operated through identifiable human judgment. In secondary orality, broadcast schedules determined what reached audiences, and two viewers watching the same channel saw the same content.</div>
+        <div class="a-rupture">On algorithmic platforms, distribution is governed by engagement-optimization processes that are proprietary, opaque, and dynamically responsive to individual user behavior. Two users opening the same application encounter different content. The shared symbolic environment fragments into individualized streams shaped by behavioral prediction.</div>
+        <div class="toggle">Click to reveal →</div>
+      </div>
+      <div class="assumption" data-idx="2">
+        <div class="a-num">ASSUMPTION III</div>
+        <h5>Consciousness encounters media externally</h5>
+        <div class="a-before">Ong's framework treats media as environments that consciousness inhabits and is shaped by, but that remain external to consciousness itself. The book sits on the shelf. The broadcast emanates from the television. The environment is other.</div>
+        <div class="a-rupture">When the symbolic environment is continuously tailored in response to prior user behavior, consciousness increasingly encounters an environment that reflects its own patterns back to it. The externality of media softens; the medium and the mind begin to co-adapt in a tight feedback loop that Ong's broadcast model did not anticipate.</div>
+        <div class="toggle">Click to reveal →</div>
+      </div>
+    </div>
+
+    <div class="deep-dive">
+      <h3>Why this matters for <em>staging</em></h3>
+      <p class="deep-dive-body">Ong distinguished his stages by qualitative transformations in how consciousness relates to the symbolic environment, not by the introduction of new technologies within a stable relationship. The transition from broadcast to algorithmic curation is such a qualitative transformation because the shared symbolic environment fragments, the editorial function becomes opaque and commercially driven, and the distinction between media and mind begins to blur. The transition from human creation to algorithmic creation is a still more fundamental rupture. The human origin of symbolic content, which connected all prior stages in Ong's account, dissolves. These are not incidental variations within a stable paradigm. They are structural changes in the conditions under which consciousness forms.</p>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="orality">
+  <div class="inner">
+    <div class="chapter-header">
+      <div class="chapter-tag">§ VI<span class="tag-sub">WHY PRIOR EXTENSIONS FAIL</span></div>
+      <h2 class="chapter-title">The tertiary orality <em>problem</em>.</h2>
+    </div>
+
+    <p class="lede">The paper is not the first attempt to extend Ong's framework beyond secondary orality. A scattered body of work across linguistics, media studies, library science, and sociology has proposed what several scholars have called <em>tertiary orality</em>. These proposals responded to features of the digital environment that Ong's broadcast model could not accommodate: interactivity, multimodality, human-machine dialogue, platform-mediated participation. Reviewing them matters because part of the case for the paper's alternative vocabulary is showing why these earlier extensions, while identifying real features of the environment, do not go far enough. They all retain one assumption that the qualifying paper identifies as no longer viable: namely, that the symbolic content circulating through digital networks originates with human authors.</p>
+
+    <div class="prior-table">
+      <div class="prior-row head">
+        <div>YEAR · AUTHOR</div>
+        <div>PROPOSAL</div>
+        <div>WHY INSUFFICIENT</div>
+      </div>
+      <div class="prior-row">
+        <div class="p-year"><strong>2009</strong><em>Mayer</em></div>
+        <div class="p-proposal">Tertiary orality shaped by the interactive circulation of digital networks rather than broadcast media. Among the earliest proposals to name the concept.</div>
+        <div class="p-limit">Identifies interactivity as the differentiator but treats the content circulating through the networks as fundamentally human-created. Does not anticipate algorithmic generation.</div>
+      </div>
+      <div class="prior-row">
+        <div class="p-year"><strong>2013</strong><em>Turner &amp; Allen</em></div>
+        <div class="p-proposal">Approached tertiary orality through the challenge that non-traditional oral documents (video blogs, oral histories, managerial communications) posed to institutional description, storage, and retrieval.</div>
+        <div class="p-limit">A library-science framing. Focused on how literate institutions accommodate oral artifacts. The question of artifact origin is not raised because it was not yet at issue.</div>
+      </div>
+      <div class="prior-row">
+        <div class="p-year"><strong>2016</strong><em>Angel-Botero &amp; Alvarado-Duque</em></div>
+        <div class="p-proposal">A phenomenological study of digital radio listeners identifying three characteristics of tertiary orality: liveliness, transcoding, and aggressiveness.</div>
+        <div class="p-limit">Empirically grounded in ways the other proposals are not. Still assumes the content being encountered is human-produced radio, transformed by digital transmission but not algorithmically generated.</div>
+      </div>
+      <div class="prior-row">
+        <div class="p-year"><strong>2020</strong><em>Soffer</em></div>
+        <div class="p-proposal">Voice querying as an attempt to discipline oral expression through the cognitive constraints of anticipated textual form, producing a hybrid mode in tension between the two.</div>
+        <div class="p-limit">The closest of the prior accounts to anticipating the paper's concerns. Still stops at human-machine interaction rather than reaching machine origination of content.</div>
+      </div>
+      <div class="prior-row">
+        <div class="p-year"><strong>2021</strong><em>Heyd</em></div>
+        <div class="p-proposal">The strongest theoretical argument for tertiary orality as a distinct category. People now talk <em>to</em> machines, not just through them, introducing a posthumanist dimension.</div>
+        <div class="p-limit">Reaches the threshold of human-machine dialogue but treats the machine's role as responsive and reactive. Does not address the condition in which the machine originates symbolic content independent of any query.</div>
+      </div>
+      <div class="prior-row">
+        <div class="p-year"><strong>2023</strong><em>Ryu</em></div>
+        <div class="p-proposal">Extended the concept of tertiary orality into virtual reality environments, with emphasis on embodied presence in synthetic worlds.</div>
+        <div class="p-limit">A spatial extension rather than a categorical one. The symbolic content within the VR environment is still, in Ryu's account, human-designed.</div>
+      </div>
+      <div class="prior-row">
+        <div class="p-year"><strong>2024</strong><em>Cordon-Garcia &amp; Munoz-Rico</em></div>
+        <div class="p-proposal">A synthesis identifying platforms like TikTok and YouTube as amplifiers of participatory characteristics that dissolve traditional sender-receiver distinctions.</div>
+        <div class="p-limit">Documents a real collapse of editorial structure. Stops short of addressing what happens when algorithmic systems not only distribute but compose the content itself.</div>
+      </div>
+    </div>
+
+    <blockquote class="pullquote">
+      Tertiary orality describes what happens to orality when the media environment becomes digital and interactive. It does not account for what happens when the content itself is generated by systems that have never had an experience.
+      <cite>- The core argument for a new conceptual axis</cite>
+    </blockquote>
+
+    <p class="lede" style="font-size:1.1rem">The more fundamental distinction in the current media environment, the paper argues, is not between speech and writing. It is between <strong>human and algorithmic origination</strong> of symbolic content. This is the axis on which the paper's two extensions are organized, and the reason the paper uses <em>algorithmicity</em> rather than <em>orality</em> in naming the final stage.</p>
+  </div>
+</section>
+
+<section class="chapter" id="extensions">
+  <div class="inner">
+    <div class="chapter-header">
+      <div class="chapter-tag">§ VII<span class="tag-sub">THE PAPER'S CONTRIBUTION</span></div>
+      <h2 class="chapter-title">The two <em>extensions</em>.</h2>
+    </div>
+
+    <p class="lede">The paper proposes that Ong's framework requires extension in two steps. The first step accommodates the transformation that occurred between Ong's broadcast-era secondary orality and the current moment: the rise of social media platforms, recommendation engines, and algorithmic feeds. In this transitional phase, humans still created symbolic content, but algorithms increasingly determined what reached which consciousness. The paper calls this stage <strong>algorithmic secondary orality</strong>. The second step accommodates what began intensifying with the public release of large language models in late 2022: the condition in which algorithmic systems both curate and generate symbolic content, making human authorship optional at scale. The paper calls this stage <strong>tertiary algorithmicity</strong>. The distinction between them is not incremental. It is the difference between a stage in which humans still think and machines distribute, and a stage in which machines think on behalf of humans who may never notice the delegation.</p>
+
+    <div class="interactive">
+      <div class="interactive-header">
+        <div>
+          <div class="interactive-label">Interactive · Tertiary Algorithmicity</div>
+          <div class="interactive-title">Three characteristics, explored</div>
+        </div>
+        <div class="mono" style="font-size:0.7rem;color:var(--ink-faded)">Click each tab above the panel.</div>
+      </div>
+      <div class="interactive-body">
+        <div class="char-frame">
+          <div class="char-viz-wrap">
+            <svg id="charSVG" viewBox="0 0 420 420" preserveAspectRatio="xMidYMid meet"></svg>
+          </div>
+          <div class="char-panel">
+            <div class="char-selector" id="charSelector">
+              <button data-c="noetic" class="active">Noetic Displacement</button>
+              <button data-c="rhetorical">Rhetorical Saturation</button>
+              <button data-c="existential">Existential Abstraction</button>
+            </div>
+            <div class="char-content" id="charContent"></div>
+          </div>
+        </div>
+        <div class="note"><strong>How the three relate.</strong> Noetic displacement, rhetorical saturation, and existential abstraction are operationally intertwined. A student who submits AI-generated work experiences all three simultaneously: cognitive labor is displaced, the output circulates within a saturated environment where its origin is uncertain, and the connection between the text and personal intellectual commitment is abstracted away. Yet each identifies a distinct dimension of the transformation. Noetic displacement concerns cognition. Rhetorical saturation concerns the communicative environment. Existential abstraction concerns the person. Together they define the condition the paper terms tertiary algorithmicity.</div>
+      </div>
+    </div>
+
+    <div class="deep-dive">
+      <h3>Why <em>algorithmicity</em>, not <em>orality</em></h3>
+      <p class="deep-dive-body">The terminological choice matters. The paper uses <strong>tertiary</strong> to indicate a third major transformation in the relationship between consciousness and the symbolic environment. It uses <strong>algorithmicity</strong> rather than <strong>orality</strong> because the oral-literate continuum no longer captures the primary transformation underway. Whether algorithmically generated content takes oral form (a synthesized podcast) or literate form (a generated essay) matters less, for the educational question at hand, than whether a human or an algorithm produced it. A podcast episode and a written essay differ in sensory modality, but if both are generated by AI systems, they share a more fundamental characteristic that cuts across the oral-literate distinction. Tertiary algorithmicity names the condition in which the symbolic source, not the sensory modality, has become the decisive variable.</p>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="closing">
+  <div class="inner">
+    <div class="chapter-header">
+      <div class="chapter-tag">§ VIII<span class="tag-sub">CLOSING</span></div>
+      <h2 class="chapter-title">What the tradition <em>asks</em>.</h2>
+    </div>
+
+    <p class="lede">A media ecological analysis is not a prediction. It does not say the current stage will produce a particular outcome, and it does not endorse the stage it describes. What it does is specify the conditions under which consciousness is now being formed, so that the practical question of what to do about those conditions can be asked with the right level of seriousness. The qualifying paper's contribution is to argue that the current stage is categorically new, that prior vocabularies do not fully reach it, and that the educational stakes of the transition are higher than the academic integrity framing suggests. The companion piece on <em>pedagogical friction</em> answers the what-to-do question. This piece has traced the theoretical architecture that made the what-to-do question askable in the first place.</p>
+
+    <div class="flourish">
+      <div class="flourish-line"></div>
+      <div class="flourish-mark">§ · §</div>
+      <div class="flourish-line"></div>
+    </div>
+
+    <div class="deep-dive">
+      <h3>A <em>non-teleological</em> closing</h3>
+      <p class="deep-dive-body">A final caution the tradition itself insists on. Stage models risk being read as stories of progress in which each successive stage supersedes and improves on the one before. Ong explicitly refused this reading, and the paper preserves the refusal. Literacy enabled analytical detachment but diminished the communal and mnemonic capacities of oral cultures. Secondary orality retrieved communal qualities but within broadcast economics. Algorithmic secondary orality enabled participatory expression at unprecedented scale but fragmented the shared symbolic environment. Tertiary algorithmicity offers powerful tools for synthesis and production but threatens to bypass the cognitive labor through which understanding develops. No stage is simply better or worse than its predecessor. Each gains something and loses something, and the work of describing both gains and losses, for the current stage as for every prior one, is what the media ecological tradition is for.</p>
+    </div>
+
+    <blockquote class="pullquote">
+      The task is not to resist technology or to embrace it. The task is to see it for what it is, and to decide, with the clarity that seeing makes possible, what to preserve.
+      <cite>- A synthesis of the tradition, written in its own voice</cite>
+    </blockquote>
+
+    <p class="lede" style="font-size:1.1rem;margin-top:2rem">The questions the paper leaves open are empirical. How do educators navigate the preservation of pedagogical friction in practice? What forms of infrastructural support most effectively sustain the conditions for genuine learning? How does the productive and exclusionary distinction operate for specific populations? The dissertation that follows will ask these questions in the field. The conceptual architecture that makes such asking possible is what the qualifying paper, and the companion interactives it has produced, have been assembling.</p>
+  </div>
+</section>
+
+<footer class="coda">
+  <div class="flourish" style="max-width:600px;margin:0 auto 2rem">
+    <div class="flourish-line"></div>
+    <div class="flourish-mark">FINIS</div>
+    <div class="flourish-line"></div>
+  </div>
+  <p>A companion to the qualifying paper <em>Beyond Secondary Orality: Tertiary Algorithmicity and the Case for Pedagogical Friction</em>. All visual diagrams and schematics are pedagogical simplifications intended to illuminate rather than exhaust the concepts they represent. For the full argument, consult the paper and its citations.</p>
+  <div class="attrib">Micah J. Miner, CETL, Ed.S. · National Louis University · Curriculum, Advocacy &amp; Policy · 2026</div>
+</footer>
+
+<script>
+document.querySelectorAll('#chapNav button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const id = btn.dataset.ch;
+    const target = document.getElementById(id);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelectorAll('#chapNav button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+const chIds = ['tradition','mcluhan','ong','company','ruptures','orality','extensions','closing'];
+const chObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      document.querySelectorAll('#chapNav button').forEach(b => {
+        b.classList.toggle('active', b.dataset.ch === id);
+      });
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+chIds.forEach(id => { const el = document.getElementById(id); if (el) chObs.observe(el); });
+
+const tetrads = {
+  writing: {
+    label: 'The Alphabet',
+    enhances: 'Abstract reasoning, precise record-keeping, private reflection, the concept of authorship itself.',
+    obsolesces: 'Oral memorization, communal mnemonic forms, the epic tradition, knowledge as embodied performance.',
+    retrieves: 'The possibility of sustained, logical argument first glimpsed in pre-literate rhetorical traditions, now systematized.',
+    reverses: 'Pushed to extreme, becomes inaccessible scholasticism, loses the living voice it had tried to preserve.',
+    summary: 'Writing creates the very idea of an individual author, detached from the community and capable of being wrong in ways the oral performer could not be.'
+  },
+  print: {
+    label: 'The Printing Press',
+    enhances: 'Mass literacy, textual standardization, the modern concept of the author as named individual, the Protestant reading self.',
+    obsolesces: 'Scribal culture, manuscript variation, the monopoly of clerical knowledge, the local and the particular.',
+    retrieves: 'The classical canon made portable and cheap; the disputation tradition now conducted across vast distances.',
+    reverses: 'Fragmentation of readership, the proliferation of discourse beyond any reader\'s capacity, information overload avant la lettre.',
+    summary: 'Print gives you the Reformation, the scientific revolution, and the modern nation-state. It also gives you, eventually, a public that cannot read fast enough to keep up with what is printed.'
+  },
+  broadcast: {
+    label: 'Radio and Television',
+    enhances: 'Mass participation, national simultaneity, a renewed tribal immediacy, the emotional reach of voice and image.',
+    obsolesces: 'Local and regional variation, the silent private reading of print culture, the sustained argumentative form.',
+    retrieves: 'The participatory mystique of primary orality; the communal experience of shared attention.',
+    reverses: 'Passive spectatorship, manufactured consensus, the erosion of the public sphere that print had constructed.',
+    summary: 'Broadcast gives you a nation that watches the same thing at the same time. It also gives you, as Postman noticed, a nation that confuses watching with knowing.'
+  },
+  social: {
+    label: 'Social Media',
+    enhances: 'Networked self-expression, the visibility of ordinary lives, participatory publishing, rapid mobilization.',
+    obsolesces: 'The shared symbolic environment of broadcast; identifiable editorial judgment; slow deliberative time.',
+    retrieves: 'Gossip, rumor, tribal sorting, the face-to-face social dynamics of small communities, at planetary scale.',
+    reverses: 'Epistemic fragmentation, outrage amplification, the optimization of attention for engagement rather than understanding.',
+    summary: 'Social media gives you every voice and takes away the shared world in which any voice could expect to be heard.'
+  },
+  genai: {
+    label: 'Generative AI',
+    enhances: 'Fluent symbolic production on demand, access to composition for those previously excluded, the rapid synthesis of distant sources.',
+    obsolesces: 'Human authorship as a necessary condition of textual production; the cognitive labor through which understanding has historically formed; the connection between expression and experience.',
+    retrieves: 'The oracle: the pronouncement from an unseen source, obeyed without interrogation. Also, the banking model of education Freire thought literacy had finally dispelled.',
+    reverses: 'Unproductive success. The appearance of learning without its substance. The performance of thought by systems that have never thought.',
+    summary: 'Generative AI gives you symbolic production at a scale no prior stage permitted. It takes away, in exchange, the guarantee that the symbol was ever the trace of a mind.'
+  }
+};
+
+function drawTetrad(mediumKey) {
+  const svg = document.getElementById('tetradSVG');
+  const t = mediumKey ? tetrads[mediumKey] : null;
+  const cx = 210, cy = 210;
+  let html = '<rect width="420" height="420" fill="#050610"/>';
+  html += '<line x1="30" y1="210" x2="390" y2="210" stroke="#2a2c38" stroke-width="1"/>';
+  html += '<line x1="210" y1="30" x2="210" y2="390" stroke="#2a2c38" stroke-width="1"/>';
+  const quads = [
+    { x: 30, y: 30, w: 180, h: 180, label: 'ENHANCES', sub: 'what it amplifies', color: '#8fa888', align: 'tl', key: 'enhances' },
+    { x: 210, y: 30, w: 180, h: 180, label: 'RETRIEVES', sub: 'what it brings back', color: '#c4a469', align: 'tr', key: 'retrieves' },
+    { x: 30, y: 210, w: 180, h: 180, label: 'OBSOLESCES', sub: 'what it pushes aside', color: '#a13828', align: 'bl', key: 'obsolesces' },
+    { x: 210, y: 210, w: 180, h: 180, label: 'REVERSES INTO', sub: 'when pushed to extreme', color: '#3d5b7d', align: 'br', key: 'reverses' }
+  ];
+  quads.forEach(q => {
+    html += `<rect x="${q.x}" y="${q.y}" width="${q.w}" height="${q.h}" fill="${q.color}" fill-opacity="0.04"/>`;
+    const hx = q.align === 'tl' || q.align === 'bl' ? q.x + 14 : q.x + q.w - 14;
+    const hy = q.align === 'tl' || q.align === 'tr' ? q.y + 22 : q.y + q.h - 60;
+    const anchor = q.align === 'tl' || q.align === 'bl' ? 'start' : 'end';
+    html += `<text x="${hx}" y="${hy}" fill="${q.color}" font-family="IBM Plex Mono" font-size="10" font-weight="700" letter-spacing="2" text-anchor="${anchor}">${q.label}</text>`;
+    html += `<text x="${hx}" y="${hy+12}" fill="${q.color}" font-family="Source Serif 4" font-size="10" font-style="italic" text-anchor="${anchor}" opacity="0.7">${q.sub}</text>`;
+    if (t) {
+      const content = t[q.key];
+      const txtX = q.align === 'tl' || q.align === 'bl' ? q.x + 14 : q.x + q.w - 14;
+      const txtY = q.align === 'tl' || q.align === 'tr' ? q.y + 60 : q.y + 40;
+      const words = content.split(' ');
+      const lines = [];
+      let cur = '';
+      const maxChar = 24;
+      words.forEach(w => {
+        if ((cur + ' ' + w).trim().length > maxChar) {
+          lines.push(cur.trim());
+          cur = w;
+        } else {
+          cur = (cur + ' ' + w).trim();
+        }
+      });
+      if (cur) lines.push(cur);
+      lines.slice(0, 6).forEach((ln, i) => {
+        html += `<text x="${txtX}" y="${txtY + i*14}" fill="#eae1cb" font-family="Source Serif 4" font-size="10.5" text-anchor="${anchor}">${ln}</text>`;
+      });
+    }
+  });
+  html += '<circle cx="210" cy="210" r="42" fill="#0a0c14" stroke="#c4a469" stroke-width="1.5"/>';
+  if (t) {
+    html += `<text x="${cx}" y="${cy-2}" fill="#c4a469" font-family="Playfair Display" font-style="italic" font-size="13" text-anchor="middle">${t.label.split(' ')[0]}</text>`;
+    if (t.label.split(' ').length > 1) {
+      html += `<text x="${cx}" y="${cy+14}" fill="#c4a469" font-family="Playfair Display" font-style="italic" font-size="13" text-anchor="middle">${t.label.split(' ').slice(1).join(' ')}</text>`;
+    }
+  } else {
+    html += '<text x="210" y="214" fill="#c4a469" font-family="Playfair Display" font-style="italic" font-size="14" text-anchor="middle">tetrad</text>';
+  }
+  svg.innerHTML = html;
+}
+document.querySelectorAll('.medium-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.medium-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const m = btn.dataset.m;
+    drawTetrad(m);
+    const t = tetrads[m];
+    document.getElementById('tetradPanel').innerHTML = `
+      <div class="t-medium">${t.label}</div>
+      <h5>The structural summary</h5>
+      <p class="t-quote">${t.summary}</p>
+    `;
+  });
+});
+drawTetrad(null);
+
+const stages = [
+  {
+    num: 'I', name: 'Primary Orality', years: 'Pre-literate',
+    era: 'Cultures before writing',
+    def: 'Knowledge is preserved through memory and performance. Thought is additive and formulaic because repetition is the only storage medium available. Speech exists only in the existential present of gesture, tone, and shared physical space.',
+    origin: 'Human speech in shared presence',
+    distribution: 'Face-to-face transmission; communal performance',
+    gain: 'Situated memory, communal knowing, agonistic exchange',
+    loss: 'Inability to preserve knowledge beyond living memory',
+    edu: 'Dependence on repetition and immediate social context',
+    viz: 'orality',
+    extended: false
+  },
+  {
+    num: 'II', name: 'Literacy', years: 'c. 4th millennium BCE forward',
+    era: 'Writing internalized into cognitive structure',
+    def: 'Writing externalizes memory, making thought objectifiable and therefore analyzable. The silent reader, encountering a text in solitude, develops a private interiority that primary orality did not support. Individual authorship, formal logic, and the scientific method all trace to this transformation.',
+    origin: 'Human-authored text',
+    distribution: 'Manuscript and print circulation',
+    gain: 'Analytical distance, abstraction, individual interiority, durable storage',
+    loss: 'Detachment from embodied and communal forms of knowing',
+    edu: 'Detachment from embodied and communal forms of knowing',
+    viz: 'literacy',
+    extended: false
+  },
+  {
+    num: 'III', name: 'Secondary Orality', years: '20th century broadcast',
+    era: 'Electronic media within a literate framework',
+    def: 'Radio, film, and television retrieve characteristics of oral culture within a fundamentally literate infrastructure. The "participatory mystique" returns, but it is scripted, scheduled, and produced by literate professionals. Ong called this manufactured spontaneity.',
+    origin: 'Human-authored speech mediated by electronic broadcast',
+    distribution: 'Mass media institutions, one-to-many distribution on shared schedules',
+    gain: 'Renewed participation and communal simultaneity within literate infrastructure',
+    loss: 'Manufactured participation, passive reception',
+    edu: 'Manufactured participation and passive reception',
+    viz: 'broadcast',
+    extended: false
+  },
+  {
+    num: 'IV', name: 'Algorithmic Secondary Orality', years: '2006 - 2022',
+    era: 'Humans create, algorithms distribute',
+    def: 'Social media platforms kept human content creation while bridging algorithmic systems between creation and reception. The editorial function shifted from human gatekeepers to proprietary engagement-optimization processes. The shared symbolic environment fragments into individualized streams.',
+    origin: 'Human-authored digital content',
+    distribution: 'Personalized feeds, recommendation systems, engagement optimization, opaque curation',
+    gain: 'Networked expression, participatory scale, new forms of solidarity and mobilization',
+    loss: 'Fragmented attention, epistemic sorting, loss of shared symbolic context',
+    edu: 'Fragmented attention, epistemic sorting, loss of shared symbolic context',
+    viz: 'algo-secondary',
+    extended: true
+  },
+  {
+    num: 'V', name: 'Tertiary Algorithmicity', years: 'Late 2022 forward',
+    era: 'Algorithmic creation and curation',
+    def: 'Algorithmic systems now both generate and distribute symbolic content, making human authorship optional at scale. The outputs are statistical predictions of plausible text, generated by systems that have never experienced what they write about. The cognitive operations education aims to develop can now be performed externally.',
+    origin: 'Algorithmically generated or co-generated symbolic content',
+    distribution: 'Algorithmic generation plus algorithmic circulation across modalities',
+    gain: 'Frictionless symbolic production, rapid recombination, access to composition for those previously excluded',
+    loss: 'Unproductive success, bypassed interpretive labor, weakened authorship',
+    edu: 'Unproductive success, bypassed interpretive labor, weakened authorship',
+    viz: 'tertiary-algo',
+    extended: true
+  }
+];
+
+const stagesStrip = document.getElementById('stagesStrip');
+let activeStage = 0;
+
+stages.forEach((s, i) => {
+  const b = document.createElement('button');
+  b.className = 'stage-btn' + (s.extended ? ' extended' : '');
+  b.innerHTML = `
+    <div class="num">STAGE ${s.num}</div>
+    <div class="name">${s.name}</div>
+    <div class="years">${s.years}</div>
+    ${s.extended ? '<div class="marker">NEW</div>' : ''}
+  `;
+  b.addEventListener('click', () => selectStage(i));
+  stagesStrip.appendChild(b);
+});
+
+function drawStageViz(viz) {
+  const svg = document.getElementById('stageVizSVG');
+  const cx = 160, cy = 160;
+  let html = '<rect width="320" height="320" fill="#050610"/>';
+  if (viz === 'orality') {
+    const n = 7;
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2 - Math.PI/2;
+      const x = cx + Math.cos(a) * 85;
+      const y = cy + Math.sin(a) * 85;
+      html += `<circle cx="${x}" cy="${y}" r="14" fill="#0a0c14" stroke="#8fa888" stroke-width="1.5"/>`;
+      const nextA = ((i+1) / n) * Math.PI * 2 - Math.PI/2;
+      const nx = cx + Math.cos(nextA) * 85;
+      const ny = cy + Math.sin(nextA) * 85;
+      html += `<line x1="${x}" y1="${y}" x2="${nx}" y2="${ny}" stroke="#8fa888" stroke-opacity="0.4" stroke-width="1"/>`;
+    }
+    html += `<text x="${cx}" y="${cy-4}" fill="#8fa888" font-family="Playfair Display" font-size="14" font-style="italic" text-anchor="middle">shared</text>`;
+    html += `<text x="${cx}" y="${cy+12}" fill="#8fa888" font-family="Playfair Display" font-size="14" font-style="italic" text-anchor="middle">presence</text>`;
+  } else if (viz === 'literacy') {
+    html += '<rect x="90" y="60" width="140" height="200" fill="#0a0c14" stroke="#8fa888" stroke-width="1.5"/>';
+    for (let i = 0; i < 12; i++) {
+      const w = 110 - (Math.random() * 20);
+      html += `<line x1="100" y1="${78 + i*15}" x2="${100 + w}" y2="${78 + i*15}" stroke="#8fa888" stroke-width="1" opacity="0.4"/>`;
+    }
+    html += `<circle cx="${cx}" cy="285" r="8" fill="#c4a469" stroke="#c4a469" stroke-width="1"/>`;
+    html += `<line x1="${cx}" y1="293" x2="${cx}" y2="305" stroke="#c4a469" stroke-width="1"/>`;
+  } else if (viz === 'broadcast') {
+    html += '<polygon points="160,50 140,270 180,270" fill="none" stroke="#c4a469" stroke-width="1.5"/>';
+    for (let i = 1; i <= 3; i++) {
+      html += `<circle cx="160" cy="80" r="${i*30}" fill="none" stroke="#c4a469" stroke-width="1" stroke-opacity="${0.6 - i*0.15}"/>`;
+    }
+    for (let i = 0; i < 8; i++) {
+      const x = 40 + i * 35;
+      html += `<circle cx="${x}" cy="290" r="6" fill="#8fa888" stroke="#8fa888" stroke-width="1"/>`;
+    }
+  } else if (viz === 'algo-secondary') {
+    const feeds = 5;
+    for (let i = 0; i < feeds; i++) {
+      const x = 30 + i * 60;
+      html += `<rect x="${x}" y="40" width="44" height="200" fill="#0a0c14" stroke="#8fa888" stroke-width="1" stroke-opacity="0.6"/>`;
+      for (let j = 0; j < 6; j++) {
+        const opacity = 0.2 + Math.random() * 0.5;
+        const h = 20 + Math.random() * 12;
+        html += `<rect x="${x+4}" y="${48 + j*30}" width="36" height="${h}" fill="#c4a469" opacity="${opacity}"/>`;
+      }
+    }
+    html += '<path d="M 30 30 Q 160 10 290 30" fill="none" stroke="#c4a469" stroke-width="1" stroke-dasharray="2,2"/>';
+    html += '<text x="160" y="270" fill="#c4a469" font-family="IBM Plex Mono" font-size="9" letter-spacing="2" text-anchor="middle">PERSONALIZED FEEDS</text>';
+    html += '<text x="160" y="290" fill="#988e78" font-family="Source Serif 4" font-style="italic" font-size="10" text-anchor="middle">no two users see the same</text>';
+  } else if (viz === 'tertiary-algo') {
+    html += `<circle cx="${cx}" cy="${cy}" r="40" fill="#0a0c14" stroke="#a13828" stroke-width="2"/>`;
+    const inner = 6;
+    for (let i = 0; i < inner; i++) {
+      const a = (i / inner) * Math.PI * 2;
+      const x = cx + Math.cos(a) * 20;
+      const y = cy + Math.sin(a) * 20;
+      html += `<circle cx="${x}" cy="${y}" r="3" fill="#a13828"/>`;
+      for (let j = 0; j < inner; j++) {
+        if (i !== j) {
+          const a2 = (j / inner) * Math.PI * 2;
+          const x2 = cx + Math.cos(a2) * 20;
+          const y2 = cy + Math.sin(a2) * 20;
+          html += `<line x1="${x}" y1="${y}" x2="${x2}" y2="${y2}" stroke="#a13828" stroke-width="0.5" opacity="0.3"/>`;
+        }
+      }
+    }
+    for (let i = 0; i < 12; i++) {
+      const a = (i / 12) * Math.PI * 2;
+      const x1 = cx + Math.cos(a) * 42;
+      const y1 = cy + Math.sin(a) * 42;
+      const x2 = cx + Math.cos(a) * 130;
+      const y2 = cy + Math.sin(a) * 130;
+      html += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#c4a469" stroke-width="0.6" opacity="0.5"/>`;
+      html += `<rect x="${x2-5}" y="${y2-5}" width="10" height="10" fill="#c4a469" opacity="0.6" transform="rotate(${i * 30} ${x2} ${y2})"/>`;
+    }
+    html += `<text x="${cx}" y="${cy-3}" fill="#a13828" font-family="Playfair Display" font-size="11" font-style="italic" text-anchor="middle">algorithmic</text>`;
+    html += `<text x="${cx}" y="${cy+11}" fill="#a13828" font-family="Playfair Display" font-size="11" font-style="italic" text-anchor="middle">origination</text>`;
+  }
+  svg.innerHTML = html;
+}
+
+function selectStage(i) {
+  activeStage = i;
+  document.querySelectorAll('.stage-btn').forEach((b, idx) => b.classList.toggle('active', idx === i));
+  const s = stages[i];
+  drawStageViz(s.viz);
+  const info = document.getElementById('stageInfo');
+  info.innerHTML = `
+    <h4>${s.name}</h4>
+    <div class="era">${s.era} · ${s.years}</div>
+    <div class="def">${s.def}</div>
+    <div class="stage-table">
+      <div class="stage-row">
+        <div class="row-key">Symbolic Origin</div>
+        <div class="row-val">${s.origin}</div>
+      </div>
+      <div class="stage-row">
+        <div class="row-key">Distribution</div>
+        <div class="row-val">${s.distribution}</div>
+      </div>
+      <div class="stage-row">
+        <div class="row-key">What is gained</div>
+        <div class="row-val gain">${s.gain}</div>
+      </div>
+      <div class="stage-row">
+        <div class="row-key">What is at risk</div>
+        <div class="row-val loss">${s.loss}</div>
+      </div>
+    </div>
+  `;
+}
+selectStage(0);
+
+document.querySelectorAll('.assumption').forEach(a => {
+  a.addEventListener('click', () => {
+    a.classList.toggle('broken');
+    const toggle = a.querySelector('.toggle');
+    toggle.textContent = a.classList.contains('broken') ? '← collapse' : 'click to reveal →';
+  });
+});
+document.getElementById('breakAll').addEventListener('click', () => {
+  const all = document.querySelectorAll('.assumption');
+  const allBroken = Array.from(all).every(a => a.classList.contains('broken'));
+  all.forEach(a => {
+    if (allBroken) {
+      a.classList.remove('broken');
+      a.querySelector('.toggle').textContent = 'click to reveal →';
+    } else {
+      a.classList.add('broken');
+      a.querySelector('.toggle').textContent = '← collapse';
+    }
+  });
+  document.getElementById('breakAll').textContent = allBroken ? 'Show how all three break ↓' : 'Collapse all ↑';
+});
+
+const characteristics = {
+  noetic: {
+    name: 'Noetic Displacement',
+    domain: 'The cognition · Ong\'s noetic world',
+    def: 'The condition in which generative and interpretive operations that previously had to occur within the learner\'s own noetic activity are increasingly offloaded to an external socio-technical system. The externalization that began with literacy has crossed a threshold: it is no longer memory being stored but cognition being performed.',
+    assumption: 'Connects to Assumption I - that humans create symbolic content. When a student can generate a competent analysis without having engaged in the interpretive labor such analysis traditionally required, the cognitive work that would have produced the text is performed in the model-and-interface stack rather than in the student\'s own mind.',
+    edu: 'What has the student learned when the analysis is competent but the analyst has not analyzed? This is the question noetic displacement forces, and it cannot be answered by looking at the output alone.',
+    color: '#c4a469'
+  },
+  rhetorical: {
+    name: 'Rhetorical Saturation',
+    domain: 'The communicative environment',
+    def: 'The condition in which algorithmic systems produce discourse at scale, flooding communicative environments with synthetic text, image, video, and audio that is increasingly indistinguishable from human production. Three aspects compound: origin uncertainty, simulated expression, and simulated dialogue.',
+    assumption: 'Connects to Assumption II - that distribution follows transparent logics. The content being curated and the dialogue being conducted may themselves be algorithmically generated. The environment in which students develop their capacity for critical evaluation is increasingly populated by content and interlocutors whose origins are unknowable.',
+    edu: 'Without the agonistic contestation Ong identified as characteristic of meaningful discourse, learners risk the erosion of the dialogic capacities on which education has always depended.',
+    color: '#8fa888'
+  },
+  existential: {
+    name: 'Existential Abstraction',
+    domain: 'The person · intellectual accountability',
+    def: 'The condition in which symbolic production is severed from lived experience, situated perspective, and material consequence. Generated text expresses positions without having stakes. It simulates conviction without being committed. The connection between claim and claimant, which persisted across every stage Ong described, dissolves.',
+    assumption: 'Connects to Assumption III - that consciousness encounters media as external environment. The symbolic environment is now populated by expressions that originated in no consciousness yet take the form of personally invested human communication. No one stands behind the output.',
+    edu: 'Education depends on students developing the willingness to take intellectual risks and accept responsibility for their thinking. When that commitment becomes optional, one of the primary mechanisms through which intellectual character forms is undermined.',
+    color: '#a13828'
+  }
+};
+
+function drawCharSVG(key) {
+  const svg = document.getElementById('charSVG');
+  const c = characteristics[key];
+  const cx = 210, cy = 210;
+  let html = '<rect width="420" height="420" fill="#050610"/>';
+  html += '<circle cx="210" cy="210" r="170" fill="none" stroke="#2a2c38" stroke-width="1"/>';
+  html += '<circle cx="210" cy="210" r="120" fill="none" stroke="#2a2c38" stroke-width="1" stroke-dasharray="3,3"/>';
+
+  if (key === 'noetic') {
+    html += `<circle cx="${cx-50}" cy="${cy}" r="50" fill="none" stroke="${c.color}" stroke-width="1.5"/>`;
+    html += `<text x="${cx-50}" y="${cy+4}" fill="${c.color}" font-family="Playfair Display" font-size="12" font-style="italic" text-anchor="middle">nous</text>`;
+    html += `<line x1="${cx+5}" y1="${cy}" x2="${cx+120}" y2="${cy}" stroke="${c.color}" stroke-width="1.5" marker-end="url(#arrowhead)"/>`;
+    html += `<defs><marker id="arrowhead" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="${c.color}"/></marker></defs>`;
+    html += `<rect x="${cx+60}" y="${cy-45}" width="100" height="90" fill="none" stroke="${c.color}" stroke-width="1.5"/>`;
+    for (let i = 0; i < 3; i++) {
+      html += `<line x1="${cx+72}" y1="${cy-20+i*20}" x2="${cx+148}" y2="${cy-20+i*20}" stroke="${c.color}" stroke-width="0.8" opacity="0.5"/>`;
+    }
+    html += `<text x="${cx+110}" y="${cy+70}" fill="${c.color}" font-family="IBM Plex Mono" font-size="9" letter-spacing="2" text-anchor="middle">EXTERNAL SYSTEM</text>`;
+    html += `<text x="${cx-50}" y="${cy+80}" fill="${c.color}" font-family="IBM Plex Mono" font-size="9" letter-spacing="2" text-anchor="middle">MIND</text>`;
+    html += `<text x="${cx+15}" y="${cy-18}" fill="${c.color}" font-family="Source Serif 4" font-style="italic" font-size="12" text-anchor="middle">displaces</text>`;
+  } else if (key === 'rhetorical') {
+    const nodes = 40;
+    for (let i = 0; i < nodes; i++) {
+      const r = 30 + Math.random() * 130;
+      const a = Math.random() * Math.PI * 2;
+      const x = cx + Math.cos(a) * r;
+      const y = cy + Math.sin(a) * r;
+      const sz = 3 + Math.random() * 12;
+      const op = 0.2 + Math.random() * 0.6;
+      html += `<rect x="${x-sz/2}" y="${y-sz/2}" width="${sz}" height="${sz*0.3}" fill="${c.color}" opacity="${op}"/>`;
+    }
+    html += `<circle cx="${cx}" cy="${cy}" r="36" fill="#050610" stroke="${c.color}" stroke-width="1.5"/>`;
+    html += `<text x="${cx}" y="${cy-2}" fill="${c.color}" font-family="Playfair Display" font-size="12" font-style="italic" text-anchor="middle">saturated</text>`;
+    html += `<text x="${cx}" y="${cy+12}" fill="${c.color}" font-family="Playfair Display" font-size="12" font-style="italic" text-anchor="middle">discourse</text>`;
+  } else if (key === 'existential') {
+    html += `<line x1="60" y1="310" x2="360" y2="310" stroke="${c.color}" stroke-width="1" opacity="0.5"/>`;
+    html += `<text x="${cx}" y="330" fill="${c.color}" font-family="IBM Plex Mono" font-size="9" letter-spacing="2" text-anchor="middle" opacity="0.6">LIVED GROUND</text>`;
+    html += `<circle cx="${cx}" cy="220" r="20" fill="none" stroke="${c.color}" stroke-width="1.5" stroke-dasharray="3,3"/>`;
+    html += `<line x1="${cx}" y1="240" x2="${cx}" y2="275" stroke="${c.color}" stroke-width="1.5" stroke-dasharray="3,3"/>`;
+    html += `<line x1="${cx-15}" y1="260" x2="${cx+15}" y2="260" stroke="${c.color}" stroke-width="1.5" stroke-dasharray="3,3"/>`;
+    html += `<path d="M ${cx} 290 L ${cx} 310" stroke="${c.color}" stroke-width="1" stroke-dasharray="1,2"/>`;
+    html += `<text x="${cx+60}" y="180" fill="${c.color}" font-family="Source Serif 4" font-style="italic" font-size="12">severed</text>`;
+    html += `<text x="${cx+60}" y="196" fill="${c.color}" font-family="Source Serif 4" font-style="italic" font-size="12">from stakes</text>`;
+    html += `<rect x="60" y="80" width="120" height="80" fill="none" stroke="${c.color}" stroke-width="1" opacity="0.6"/>`;
+    for (let i = 0; i < 4; i++) {
+      html += `<line x1="70" y1="${95 + i*15}" x2="${110 + Math.random() * 50}" y2="${95 + i*15}" stroke="${c.color}" stroke-width="0.8" opacity="0.5"/>`;
+    }
+    html += `<text x="120" y="175" fill="${c.color}" font-family="IBM Plex Mono" font-size="8" letter-spacing="1" text-anchor="middle">CLAIM WITHOUT CLAIMANT</text>`;
+  }
+
+  svg.innerHTML = html;
+}
+
+function renderChar(key) {
+  const c = characteristics[key];
+  document.querySelectorAll('#charSelector button').forEach(b => b.classList.toggle('active', b.dataset.c === key));
+  document.getElementById('charContent').innerHTML = `
+    <h4>${c.name}</h4>
+    <div class="char-domain">${c.domain}</div>
+    <div class="char-def">${c.def}</div>
+    <div class="char-block">
+      <div class="bl-label">Relation to the assumption that no longer holds</div>
+      <p>${c.assumption}</p>
+    </div>
+    <div class="char-block edu">
+      <div class="bl-label">Educational stake</div>
+      <p>${c.edu}</p>
+    </div>
+  `;
+  drawCharSVG(key);
+}
+document.querySelectorAll('#charSelector button').forEach(b => {
+  b.addEventListener('click', () => renderChar(b.dataset.c));
+});
+renderChar('noetic');
+</script>
+
+</body>
+</html>

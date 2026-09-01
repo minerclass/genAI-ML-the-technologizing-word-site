@@ -19,6 +19,27 @@ here, in the repository, not in a local file.
 
 ---
 
+## 2026-09-01 - Adopt the shared ground; warm ink kept
+
+Links https://minerclass.github.io/tokens.css and points the ground at the shared token
+with a pre-adoption fallback. **The split here is the reverse of the games**: the warm
+parchment ink is this trio's identity, so it stays local while the ground joins the shared
+value. Contrast against the ink drops slightly (15.0 to 14.27) but stays far above threshold.
+
+**Pre-existing failures repaired while here.** Three, and one was severe:
+
+- **`.stage-btn` set no `color` at all**, so the button text fell back to the browser's
+  default `buttontext`, which is black. `--paper` is a dark panel in this theme, so all
+  **five sensorium stage names rendered black on dark at 1.21** - effectively invisible,
+  on the page's central concept. Setting the ink explicitly gives 13.31.
+- `--oxblood` (2.57) and `--midnight` (2.47) failed as text. Both keep their SVG-fill and
+  border roles; text uses lifted variants at 4.96 and 5.84.
+- `--ink-faded` measured 2.61 and was lifted to `#8d8474` (5.03).
+
+**Verified.** Zero contrast failures with the token sheet on and off; tightest pair 4.69.
+
+---
+
 ## 2026-08-31 - Honour prefers-reduced-motion
 
 Found during an accessibility sweep across the dissertation ecosystem.
